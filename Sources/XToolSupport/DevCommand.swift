@@ -52,7 +52,7 @@ struct PackOperation {
             """)
         }
 
-        await LSPConfig.tryEnsure(using: schema)
+        await LSPConfig.tryEnsure(using: schema, cliTriple: triple)
 
         let buildSettings = try await BuildSettings(
             configuration: buildOptions.configuration,
@@ -375,6 +375,11 @@ struct DeferredMacBuildOperation {
             || contents.contains(where: { $0.hasPrefix("Package@") && $0.hasSuffix(".swift") }) else {
             throw Console.Error("Could not find Package.swift in this directory.")
         }
+        await LSPConfig.tryEnsure(
+            using: request.schema,
+            cliTriple: request.triple,
+            currentDirectory: request.directory
+        )
         @Dependency(\.devCommandClient) var client
         try await client.ensureSDK()
         print("Planning...")
