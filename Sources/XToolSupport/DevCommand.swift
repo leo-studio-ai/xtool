@@ -542,6 +542,7 @@ struct DevCommand: AsyncParsableCommand {
             DevRunCommand.self,
             DevVerifyCommand.self,
             MacSignCommand.self,
+            DevNotarizeCommand.self,
             DevBSPCommand.self,
         ],
         defaultSubcommand: DevRunCommand.self
